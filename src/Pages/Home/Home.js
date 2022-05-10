@@ -8,7 +8,7 @@ import Treatment from "./Treatment";
 
 const Home = () => {
   return (
-    <div className="mx-5 lg:mx-16">
+    <div className="">
       <Navbar></Navbar>
       <Banner></Banner>
       <Info></Info>

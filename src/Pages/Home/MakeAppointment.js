@@ -5,7 +5,7 @@ import MainButton from "../Shared/MainButton";
 
 const MakeAppointment = () => {
   return (
-    <section style={{ background: `url(${appBack})` }} className="mb-40">
+    <section style={{ background: `url(${appBack})` }} className="mb-40 mt-20 px-5 lg:px-16">
       <div className="flex items-center justify-center">
         <div className="flex-1 hidden lg:block">
           <img className=" mt-[-100px]" src={doctor} alt="" />

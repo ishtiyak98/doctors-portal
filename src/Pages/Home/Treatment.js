@@ -4,7 +4,7 @@ import MainButton from "../Shared/MainButton";
 
 const Treatment = () => {
   return (
-    <section className="pb-40  lg:px-20">
+    <section className="pb-40 lg:px-20 mx-5 lg:mx-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-24 gap-y-7">
         <div className="flex px-7 justify-center">
           <img className="rounded-xl w-full " src={treatmentImg} alt="" />
