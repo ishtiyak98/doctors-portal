@@ -3,7 +3,7 @@ import React from "react";
 const InfoCard = ({icon, cardTitle, cardText, background}) => {
   return (
     <div>
-      <div class={`card lg:card-side h-full shadow-xl ${background}`}>
+      <div class={`card lg:card-side h-full p-5 shadow-xl ${background}`}>
         <figure className="px-5 pt-8 lg:pt-0">
           <img
             src={icon}
