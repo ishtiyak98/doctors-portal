@@ -47,7 +47,7 @@ const Testimonial = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
-              feedback.map(feedback => <FeedbackCard feedback={feedback}></FeedbackCard>)
+              feedback.map(feedback => <FeedbackCard key={feedback._id} feedback={feedback}></FeedbackCard>)
           }
       </div>
     </section>
