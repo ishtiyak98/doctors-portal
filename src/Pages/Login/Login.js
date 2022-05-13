@@ -27,13 +27,19 @@ const Login = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Type here"
-                  className="input input-bordered input-secondary w-full max-w-lg"
-                  {...register("email", { required: true })}
+                  className="input input-bordered input-accent w-full max-w-lg"
+                  {...register("email", {
+                    required: true,
+                    pattern: {
+                      value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                      message: "Provide a valid Email",
+                    },
+                  })}
                 />
                 <label className="label">
                   <span className="label-text-alt text-red-500">
                     {errors.email?.type === "required" && "email is required"}
+                    {errors.email?.type === "pattern" && errors.email.message}
                   </span>
                 </label>
               </div>
@@ -44,13 +50,12 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
-                  placeholder="Type here"
-                  className="input input-bordered input-secondary w-full max-w-lg"
+                  className="input input-bordered input-accent w-full max-w-lg"
                   {...register("password", {
                     required: true,
                     minLength: {
                       value: 6,
-                      message: "minimum length must be 6",
+                      message: "Minimum length must be 6",
                     },
                   })}
                 />
@@ -58,7 +63,8 @@ const Login = () => {
                   <span className="label-text-alt text-red-500">
                     {errors.password?.type === "required" &&
                       "password is required"}
-                    {errors.password?.type === "minLength" && error}
+                    {errors.password?.type === "minLength" &&
+                      errors.password.message}
                   </span>
                 </label>
               </div>
