@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import auth from "../../firebase.init";
 
 const LoginWithApp = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(()=>{
         if (user) {
@@ -13,8 +16,8 @@ const LoginWithApp = () => {
                 icon: 'success',
                 title: 'User Found',
               })
-
             console.log(user);
+            navigate(from, { replace: true });
         }
     },[user]);
 

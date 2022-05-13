@@ -1,16 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Shared/Navbar";
 import LoginWithApp from "./LoginWithApp";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import Spinner from "../Shared/Spinner";
 
 const Login = () => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const { register, formState: { errors }, handleSubmit } = useForm();
+  const [loginMessage, setLoginMessage] = useState("");
+  const [textColor, setTextColor] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  //!-------- handle successful Signup --------
+  useEffect(()=>{
+    if (user) {
+      setLoginMessage("Successfully Registered");
+      setTextColor("text-green-500");
+      navigate(from, { replace: true });
+    }
+  }, [user,from, navigate]);
+
+  //!-------- handle Signup error --------
+  useEffect(()=>{
+    if (error) {
+      setLoginMessage(error.message);
+      setTextColor("text-red-500");
+    }
+}, [error]);
+
+  if (loading) {
+    return <Spinner></Spinner>;
+  }
+  
+
+  //!-------- handle form on-submit --------
+  const onSubmit = (data) => {
+    signInWithEmailAndPassword(data.email, data.password);
+  };
 
   return (
     <>
@@ -76,6 +108,9 @@ const Login = () => {
                   value="Login"
                 />
               </div>
+              <p className={`text-center ${textColor} text-sm`}>
+                  {loginMessage && loginMessage}
+              </p>
             </form>
 
             <div className="">

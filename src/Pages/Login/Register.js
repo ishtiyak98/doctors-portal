@@ -9,15 +9,15 @@ import LoginWithApp from "./LoginWithApp";
 
 const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
-  const [signupMessage, setSignupMessage] = useState(""); 
+  const [updateProfile, updating] = useUpdateProfile(auth);
   const {register, formState: { errors }, handleSubmit} = useForm();
+  
+  const [signupMessage, setSignupMessage] = useState(""); 
   const [textColor, setTextColor] = useState("");
 
   //!-------- handle successful Signup --------
   useEffect(()=>{
     if (user) {
-      console.log(user);
       setSignupMessage("Successfully Registered");
       setTextColor("text-green-500");
     }
@@ -40,7 +40,7 @@ const Register = () => {
 
 
   //!-------- handle form on-submit --------
-  const onSubmit = async(data) => {
+  const handleSignup = async(data) => {
     console.log(data);
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
@@ -54,7 +54,7 @@ const Register = () => {
         <div className="card w-11/12 lg:w-[400px] bg-base-100 shadow-xl">
           <div className="card card-body">
             <h2 className="text-2xl font-semibold text-center">Signup</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleSignup)}>
               <div className="form-control w-full max-w-lg">
                 <label className="label">
                   <span className="label-text text-base">Name</span>
