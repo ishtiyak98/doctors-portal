@@ -1,7 +1,7 @@
 import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import auth from "../../firebase.init";
 
 const Navbar = () => {
@@ -13,11 +13,11 @@ const Navbar = () => {
 
   const navItems = (
     <>
-        <li><Link to={"/"}>Home</Link></li>
-        <li><Link to={"/appointment"}>Appointment</Link></li>
-        <li><Link to={"/"}>Reviews</Link></li>
-        <li><Link to={"/"}>About</Link></li>
-        <li><Link to={"/"}>Contact Us</Link></li>
+        <li><NavLink to={"/"}>Home</NavLink></li>
+        <li><NavLink to={"/appointment"}>Appointment</NavLink></li>
+        <li><NavLink to={"/review"}>Reviews</NavLink></li>
+        <li><NavLink to={"/about"}>About</NavLink></li>
+        <li><NavLink to={"/contact"}>Contact Us</NavLink></li>
         {
           user ? <li><Link to={"/login"} onClick={()=>{signOut(auth);}}>Logout</Link></li>  : <li><Link to={"/login"}>Login</Link></li>
         }
@@ -48,7 +48,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex="0"
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
             >
               {navItems}
             </ul>
@@ -56,7 +56,7 @@ const Navbar = () => {
           <Link className="btn btn-ghost normal-case text-xl" to={"/"}>Doctors Portal</Link>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal p-0">{navItems}</ul>
+          <ul className="menu menu-horizontal p-0 space-x-2">{navItems}</ul>
         </div>
       </div>
     </>
