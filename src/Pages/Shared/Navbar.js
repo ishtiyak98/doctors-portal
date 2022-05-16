@@ -21,7 +21,6 @@ const Navbar = () => {
         {
           user ? <li><Link to={"/login"} onClick={()=>{signOut(auth);}}>Logout</Link></li>  : <li><Link to={"/login"}>Login</Link></li>
         }
-        
     </>
   );
 

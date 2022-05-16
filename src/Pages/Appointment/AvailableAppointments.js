@@ -1,17 +1,28 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import Spinner from "../Shared/Spinner";
 import AppointmentCard from "./AppointmentCard";
 import AppointmentModal from "./AppointmentModal";
 
 const AvailableAppointments = ({ date }) => {
-  const [appointments, setAppointment] = useState([]);
+  // const [appointments, setAppointment] = useState([]);
   const [treatment, setTreatment] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/services")
-      .then((res) => res.json())
-      .then((data) => setAppointment(data));
-  }, []);
+  const {data:appointments, isLoading, refetch } = useQuery("available", () =>
+    fetch(`http://localhost:5000/available?date=${format(date, "PP")}`)
+    .then((res) => res.json())
+  );
+
+  if (isLoading) {
+    return <Spinner></Spinner>;
+  }
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/available?date=${format(date, "PP")}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setAppointment(data));
+  // }, [date]);
 
   console.log(treatment);
 
@@ -31,9 +42,14 @@ const AvailableAppointments = ({ date }) => {
         ))}
       </div>
 
-      {
-          treatment && <AppointmentModal treatment={treatment} setTreatment={setTreatment} date={date}></AppointmentModal>
-      }
+      {treatment && (
+        <AppointmentModal
+          treatment={treatment}
+          setTreatment={setTreatment}
+          date={date}
+          refetch = {refetch}
+        ></AppointmentModal>
+      )}
     </section>
   );
 };
