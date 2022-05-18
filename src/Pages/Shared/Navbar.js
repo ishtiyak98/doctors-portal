@@ -19,8 +19,12 @@ const Navbar = () => {
         <li><NavLink to={"/about"}>About</NavLink></li>
         <li><NavLink to={"/contact"}>Contact Us</NavLink></li>
         {
+          user && <li><NavLink to={"/dashboard"}>Dashboard</NavLink></li>
+        }
+        {
           user ? <li><Link to={"/login"} onClick={()=>{signOut(auth);}}>Logout</Link></li>  : <li><Link to={"/login"}>Login</Link></li>
         }
+        
     </>
   );
 
@@ -45,6 +49,8 @@ const Navbar = () => {
                 />
               </svg>
             </label>
+            
+            
             <ul
               tabIndex="0"
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 space-y-2"
@@ -53,10 +59,17 @@ const Navbar = () => {
             </ul>
           </div>
           <Link className="btn btn-ghost normal-case text-xl" to={"/"}>Doctors Portal</Link>
+          
         </div>
-        <div className="navbar-end hidden lg:flex">
-          <ul className="menu menu-horizontal p-0 space-x-2">{navItems}</ul>
+        <div className="navbar-end">
+          <div className="hidden lg:flex">
+            <ul className="menu menu-horizontal p-0 space-x-2">{navItems}</ul>  
+          </div>
+          <div className="">
+            <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">drawer</label>
+          </div>
         </div>
+       
       </div>
     </>
   );

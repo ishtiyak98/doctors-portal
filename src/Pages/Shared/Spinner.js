@@ -6,7 +6,7 @@ const Spinner = () => {
   let [color] = useState("#50E3C2");
   return (
     <div className="sweet-loading h-screen flex justify-center items-center">
-      <RotateLoader color={color} loading={loading} size={20} margin={2} />
+      <RotateLoader color={color} loading={loading} size={15} margin={2} />
     </div>
   );
 };
