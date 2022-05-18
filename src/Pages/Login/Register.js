@@ -3,6 +3,7 @@ import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-fireb
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 import Navbar from "../Shared/Navbar";
 import Spinner from "../Shared/Spinner";
 import LoginWithApp from "./LoginWithApp";
@@ -14,6 +15,8 @@ const Register = () => {
   
   const [signupMessage, setSignupMessage] = useState(""); 
   const [textColor, setTextColor] = useState("");
+
+  const [token] = useToken(user);
 
   //!-------- handle successful Signup --------
   useEffect(()=>{

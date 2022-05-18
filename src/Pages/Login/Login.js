@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import Spinner from "../Shared/Spinner";
+import useToken from "../../hooks/useToken";
 
 const Login = () => {
   const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
@@ -13,18 +14,20 @@ const Login = () => {
   const [loginMessage, setLoginMessage] = useState("");
   const [textColor, setTextColor] = useState("");
 
+  const [token] = useToken(user);
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   //!-------- handle successful Signup --------
   useEffect(()=>{
-    if (user) {
+    if (token) {
       setLoginMessage("Successfully Registered");
       setTextColor("text-green-500");
       navigate(from, { replace: true });
     }
-  }, [user,from, navigate]);
+  }, [token, from, navigate]);
 
   //!-------- handle Signup error --------
   useEffect(()=>{

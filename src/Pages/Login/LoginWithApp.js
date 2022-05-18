@@ -3,6 +3,7 @@ import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import auth from "../../firebase.init";
+import useToken from "../../hooks/useToken";
 
 const LoginWithApp = () => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
@@ -10,6 +11,8 @@ const LoginWithApp = () => {
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
+    const [Token] = useToken(user);
+    
     useEffect(()=>{
         if (user) {
             Swal.fire({

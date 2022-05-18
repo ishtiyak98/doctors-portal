@@ -1,15 +1,33 @@
+import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 
 const MyAppointment = () => {
   const [myAppointments, setMyAppointments] = useState([]);
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/appointment?email=${user.email}`)
-        .then((res) => res.json())
+      fetch(`http://localhost:5000/appointment?email=${user.email}`, {
+        method: "GET",
+        headers: {
+          "authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+      })
+        .then((res) => {
+          console.log(res, "...res");
+          if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem("accessToken");
+            signOut(auth);
+            toast.error("Un-Authorized Access");
+            navigate("/");
+          }
+          return res.json();
+        })
         .then((data) => setMyAppointments(data));
     }
   }, [user]);
