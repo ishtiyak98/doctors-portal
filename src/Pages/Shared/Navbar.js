@@ -8,7 +8,7 @@ const Navbar = () => {
   const [user] = useAuthState(auth);
 
   if (user) {
-    console.log(user);
+    // console.log(user);
   }
 
   const handleSignout = ()=>{
